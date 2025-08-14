@@ -1,0 +1,9 @@
+module "postgresql_min" {
+  source        = "./postgresql_gcp"
+  project_id    = "tu-proyecto-id"
+  instance_name = "mi-postgres-dev"
+  db_name       = "basededatos"
+  db_user       = "usuario"
+  db_password   = "supersegura"
+  network       = "projects/tu-proyecto-id/global/networks/default"
+}

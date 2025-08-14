@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: curso-devops-deployment
+  labels:
+    app: curso-devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: curso-devops
+  template:
+    metadata:
+      labels:
+        app: curso-devops
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:alpine
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: html-volume
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: html-volume
+        configMap:
+          name: curso-devops-html
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: curso-devops-html
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Curso DevOps Acc</title>
+    </head>
+    <body>
+      <h1 style="text-align:center; margin-top: 50px;">Curso DevOps Acc</h1>
+    </body>
+    </html>
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: curso-devops-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: curso-devops
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80

@@ -1,0 +1,5 @@
+module "vm" {
+  source        = "./vm_basica"
+  project_id    = "tu-proyecto-id"
+  instance_name = "mi-vm-debian"
+}

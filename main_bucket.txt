@@ -1,0 +1,5 @@
+module "bucket_simple" {
+  source      = "./gcs_bucket"    # Ruta al módulo local
+  project_id  = "tu-proyecto-id"
+  bucket_name = "nombre-unico-global"
+}

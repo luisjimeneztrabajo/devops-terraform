@@ -1,0 +1,58 @@
+terraform {
+  required_version = ">= 1.5.0"
+  required_providers {
+    google = {
+      source  = "hashicorp/google"
+      version = ">= 5.0"
+    }
+  }
+}
+
+provider "google" {
+  project = var.project_id
+  region  = var.region
+  zone    = var.zone
+}
+
+# Variables mínimas en raíz (puedes moverlas a variables.tf si prefieres)
+variable "project_id" {
+  type    = string
+  default = "your-gcp-project-id"
+}
+
+variable "region" {
+  type    = string
+  default = "us-central1"
+}
+
+variable "zone" {
+  type    = string
+  default = "us-central1-a"
+}
+
+module "gke_min" {
+  source      = "./gke_min"
+  project_id  = "playground-s-11-31394c85"
+  region      = var.region
+  zone        = var.zone
+
+  # Personalizable
+  cluster_name            = "gke-min"
+  network_name            = "vpc-gke-min"
+  subnetwork_name         = "subnet-gke-min"
+  subnetwork_cidr         = "10.0.0.0/16"
+  pods_secondary_cidr     = "10.1.0.0/16"
+  services_secondary_cidr = "10.2.0.0/20"
+
+  node_count   = 3
+  machine_type = "e2-medium" # puedes probar "e2-small" si tu región lo soporta
+  disk_size_gb = 50
+}
+
+output "gke_endpoint" {
+  value = module.gke_min.endpoint
+}
+
+output "gke_cluster_name" {
+  value = module.gke_min.cluster_name
+}
