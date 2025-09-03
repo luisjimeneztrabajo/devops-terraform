@@ -53,3 +53,65 @@ systemctl status jenkins
 
 # 9. Obtener la contraseña inicial de Jenkins
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+
+# 🎯 Crear un Pipeline en Jenkins con stages dummy
+
+## 1. Entrar a Jenkins
+- Abre tu navegador e ingresa a  
+  http://<IP_EXTERNA_DE_TU_VM>:8080  
+- Inicia sesión con tu usuario administrador
+
+## 2. Crear un nuevo Job
+- Haz clic en "New Item"  
+- Escribe el nombre: `pipeline-dummy`  
+- Selecciona "Pipeline"  
+- Haz clic en "OK"  
+
+## 3. Configurar el Pipeline
+- Baja hasta la sección "Pipeline"  
+- En "Definition" selecciona "Pipeline script"  
+- Copia y pega el siguiente código en el editor:
+
+```groovy
+pipeline {
+    agent any
+    stages {
+        stage('Preparación') {
+            steps {
+                echo 'Iniciando el pipeline...'
+            }
+        }
+        stage('Compilación') {
+            steps {
+                echo 'Compilando el proyecto (dummy)...'
+                sh 'sleep 2'
+            }
+        }
+        stage('Pruebas') {
+            steps {
+                echo 'Ejecutando pruebas unitarias (dummy)...'
+                sh 'sleep 2'
+            }
+        }
+        stage('Empaquetado') {
+            steps {
+                echo 'Generando artefacto (dummy)...'
+                sh 'sleep 2'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Desplegando en ambiente de prueba (dummy)...'
+                sh 'sleep 2'
+            }
+        }
+        stage('Finalización') {
+            steps {
+                echo 'Pipeline completado ✅'
+            }
+        }
+    }
+}
+
