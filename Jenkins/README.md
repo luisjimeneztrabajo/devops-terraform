@@ -74,7 +74,7 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 - En "Definition" selecciona "Pipeline script"  
 - Copia y pega el siguiente código en el editor:
 
-```groovy
+
 pipeline {
     agent any
     stages {
