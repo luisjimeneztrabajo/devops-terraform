@@ -34,8 +34,19 @@ sudo systemctl enable jenkins
 systemctl status jenkins
 
 # 7. Abrir el puerto en Google Cloud (hacer desde la consola web)
-# VPC Network > Firewall rules > Create rule
-# Permitir tráfico TCP en el puerto 8080 (origen: tu IP o 0.0.0.0/0)
+1. Ve a la **Google Cloud Console** → Menú lateral → **VPC Network** → **Firewall rules**  
+2. Haz clic en **Create firewall rule**  
+3. Configura los campos:  
+   - **Name**: `allow-jenkins-8080`  
+   - **Network**: elige la misma red de tu VM (por defecto suele ser `default`)  
+   - **Targets**: selecciona `All instances in the network` (o `Specified target tags` si quieres restringir solo a tu VM con un tag)  
+   - **Source filter**:  
+     - Acceso desde cualquier IP → `IPv4 ranges` = `0.0.0.0/0`  
+     - Acceso solo desde tu PC → tu IP pública, ej: `190.45.xxx.xxx/32`  
+   - **Protocols and ports**:  
+     - Marca `Specified protocols and ports` → selecciona **TCP** → escribe `8080`  
+4. Haz clic en **Create** ✅
+
 
 # 8. Acceder a Jenkins en el navegador
 # http://<EXTERNAL_IP_VM>:8080
